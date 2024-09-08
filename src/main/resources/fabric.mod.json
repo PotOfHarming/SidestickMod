@@ -1,0 +1,40 @@
+{
+	"schemaVersion": 1,
+	"id": "sidestickmod",
+	"version": "${version}",
+	"name": "SidestickMod",
+	"description": "Use your sidestick in minecraft!",
+	"authors": [
+		"Me!"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/sidestickmod/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"pot.potionofharming.SidestickMod"
+		],
+		"client": [
+			"pot.potionofharming.SidestickModClient"
+		],
+		"fabric-datagen": [
+			"pot.potionofharming.SidestickModDataGenerator"
+		]
+	},
+	"mixins": [
+		"sidestickmod.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.16.5",
+		"minecraft": "~1.20",
+		"java": ">=21",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}
