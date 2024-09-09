@@ -21,7 +21,7 @@ public class PYLoop {
             if (player == null) player = MinecraftClient.getInstance().player;
             if (MinecraftClient.getInstance().isPaused() || player == null) {
                 try {
-                    Thread.sleep(Math.round(MinecraftClient.getInstance().getLastFrameDuration()*100));
+                    Thread.sleep(16);
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }

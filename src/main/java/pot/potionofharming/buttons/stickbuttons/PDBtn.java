@@ -1,25 +1,57 @@
 package pot.potionofharming.buttons.stickbuttons;
 
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
+import net.minecraft.client.option.KeyBinding;
+import net.minecraft.client.util.InputUtil;
+import pot.potionofharming.SidestickMod;
 
 public class PDBtn {
-    public static void clickButton(byte place, byte destroy) {
-    if (place == 0 && destroy == 0) return;
-    MinecraftClient client = MinecraftClient.getInstance();
-    BlockHitResult bhr = (BlockHitResult) client.crosshairTarget;
-    if (bhr == null) return;
-    BlockPos pos = bhr.getBlockPos();
-    Direction dir = bhr.getSide();
+    public static byte ds;
+    public static byte pl;
 
-    if (place == 1) {
-
+    public static boolean startedPLoop = false;
+    public static boolean startedDLoop = false;
+    public static void clickButton(byte destroy, byte place) {
+        MinecraftClient client = MinecraftClient.getInstance();
+        ds = destroy;
+        pl = place;
+        if (pl==1 && !startedPLoop) {
+            Thread placeLoop = new Thread(PDBtn::loopPlace);
+            placeLoop.setDaemon(true);
+            placeLoop.start();
+            startedPLoop = true;
+        }
+        if (ds==1 && !startedDLoop) {
+            Thread destroyLoop = new Thread(PDBtn::loopDestroy);
+            destroyLoop.setDaemon(true);
+            destroyLoop.start();
+            startedDLoop = true;
+        }
     }
 
-    if (destroy == 1) {
-
+    public static void loopPlace() {
+        KeyBinding.setKeyPressed(MinecraftClient.getInstance().options.useKey.getDefaultKey(), true);
+        while (pl == 1) {
+            try {
+                Thread.sleep(Math.round(MinecraftClient.getInstance().getLastFrameDuration()*10));
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        KeyBinding.setKeyPressed(MinecraftClient.getInstance().options.useKey.getDefaultKey(), false);
+        startedPLoop = false;
     }
-}
+
+    public static void loopDestroy() {
+        KeyBinding.setKeyPressed(MinecraftClient.getInstance().options.attackKey.getDefaultKey(), true);
+        while (ds == 1) {
+            try {
+                Thread.sleep(Math.round(MinecraftClient.getInstance().getLastFrameDuration()*10));
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        KeyBinding.setKeyPressed(MinecraftClient.getInstance().options.attackKey.getDefaultKey(), false);
+        startedDLoop = false;
+    }
 }
