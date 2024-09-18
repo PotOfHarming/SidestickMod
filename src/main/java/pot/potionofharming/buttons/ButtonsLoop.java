@@ -4,6 +4,7 @@ import net.minecraft.client.MinecraftClient;
 import org.lwjgl.glfw.GLFW;
 import pot.potionofharming.SidestickMod;
 
+import java.awt.*;
 import java.nio.ByteBuffer;
 
 import static pot.potionofharming.SidestickMod.*;
@@ -21,13 +22,15 @@ public class ButtonsLoop {
                 buttonsLoop();
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
+            } catch (AWTException e) {
+                throw new RuntimeException(e);
             }
         });
         placeDestroyLoop.setDaemon(true);
         placeDestroyLoop.start();
     }
 
-    public static void buttonsLoop() throws InterruptedException {
+    public static void buttonsLoop() throws InterruptedException, AWTException {
         LOGGER.info("STARTING BUTTONS LOOP!");
         while (true) {
             if (currentLoopID < loopID) break;

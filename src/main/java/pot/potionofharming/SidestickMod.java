@@ -25,7 +25,7 @@ public class SidestickMod implements ModInitializer {
 		}
 
 		// Get Joystick connected
-		for (int i = 0; i <= GLFW.GLFW_JOYSTICK_LAST; i++) {
+		for (int i = GLFW.GLFW_JOYSTICK_1; i <= GLFW.GLFW_JOYSTICK_LAST; i++) {
 			if (GLFW.glfwJoystickPresent(i)) {
 				LOGGER.info("Joystick found: " + GLFW.glfwGetJoystickName(i));
 				joystickID = i;
@@ -50,11 +50,16 @@ public class SidestickMod implements ModInitializer {
 				LOGGER.warn("JOYSTICK IS NOT PRESENT!");
 				return;
 			}
-
-			// loops
-			ButtonsLoop.initButtonsLoop();
-			PYLoop.initPaYLoop();
 		}
+		reloadLoops();
+	}
+
+	public static void reloadLoops() {
+		loopID++;
+		// loops
+		ButtonsLoop.initButtonsLoop();
+		PYLoop.initPaYLoop();
+		SidestickMod.LOGGER.info("Reloaded loops");
 	}
 	public static PlayerEntity player = MinecraftClient.getInstance().player;
 }

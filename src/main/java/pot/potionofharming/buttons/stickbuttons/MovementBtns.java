@@ -20,14 +20,14 @@ public class MovementBtns {
         bw = backward==1;
         lf = left==1;
         rg = right==1;
-		if (!fw || !bw) {
-            KeyBinding.setKeyPressed(fwk, fw);
-            KeyBinding.setKeyPressed(bwk, bw);
-		}
-		if (!lf || !rg) {
-            KeyBinding.setKeyPressed(lfk, lf);
-            KeyBinding.setKeyPressed(rgk, rg);
-		}
+            if (!fw || !bw) {
+                KeyBinding.setKeyPressed(fwk, fw);
+                KeyBinding.setKeyPressed(bwk, bw);
+            }
+            if (!lf || !rg) {
+                KeyBinding.setKeyPressed(lfk, lf);
+                KeyBinding.setKeyPressed(rgk, rg);
+            }
     }
 }
 

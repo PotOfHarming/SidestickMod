@@ -22,7 +22,7 @@ public class SelectStick extends Screen {
     @Inject(at = @At("RETURN"), method = "initWidgetsNormal")
     private void addBtn(CallbackInfo ci) {
         this.addDrawableChild(
-                ButtonWidget.builder(Text.literal("Select sidestick"), button -> {
+                ButtonWidget.builder(Text.literal("Sidestick options"), button -> {
                             this.client.setScreen(new SelectSidestickScreen(this.client.currentScreen));
                         })
                         .dimensions(5, 5, 100, 20)
