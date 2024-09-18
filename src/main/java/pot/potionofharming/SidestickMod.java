@@ -16,6 +16,8 @@ public class SidestickMod implements ModInitializer {
 
 	public static int joystickID;
 	public static boolean joystickFound = false;
+	public static int loopID = 0;
+	public static int fpsNum = 16;
 	@Override
 	public void onInitialize() {
 		if (!GLFW.glfwInit()) {

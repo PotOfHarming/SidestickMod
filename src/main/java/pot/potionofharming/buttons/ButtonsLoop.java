@@ -2,6 +2,7 @@ package pot.potionofharming.buttons;
 
 import net.minecraft.client.MinecraftClient;
 import org.lwjgl.glfw.GLFW;
+import pot.potionofharming.SidestickMod;
 
 import java.nio.ByteBuffer;
 
@@ -12,7 +13,9 @@ import static pot.potionofharming.buttons.stickbuttons.PDBtn.clickButton;
 import static pot.potionofharming.buttons.stickbuttons.PauseBtn.pauseGame;
 
 public class ButtonsLoop {
+    private static int currentLoopID;
     public static void initButtonsLoop() {
+        currentLoopID = loopID;
         Thread placeDestroyLoop = new Thread(() -> {
             try {
                 buttonsLoop();
@@ -27,6 +30,7 @@ public class ButtonsLoop {
     public static void buttonsLoop() throws InterruptedException {
         LOGGER.info("STARTING BUTTONS LOOP!");
         while (true) {
+            if (currentLoopID < loopID) break;
             if (player == null) player = MinecraftClient.getInstance().player;
             if (player == null) {
                 try {
@@ -60,7 +64,7 @@ public class ButtonsLoop {
             }
 
             try {
-                Thread.sleep(Math.round(MinecraftClient.getInstance().getLastFrameDuration()*100));
+                Thread.sleep(SidestickMod.fpsNum);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }

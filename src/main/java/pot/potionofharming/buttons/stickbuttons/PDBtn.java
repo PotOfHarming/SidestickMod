@@ -33,7 +33,7 @@ public class PDBtn {
         KeyBinding.setKeyPressed(MinecraftClient.getInstance().options.useKey.getDefaultKey(), true);
         while (pl == 1) {
             try {
-                Thread.sleep(Math.round(MinecraftClient.getInstance().getLastFrameDuration()*10));
+                Thread.sleep(SidestickMod.fpsNum);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
@@ -46,7 +46,7 @@ public class PDBtn {
         KeyBinding.setKeyPressed(MinecraftClient.getInstance().options.attackKey.getDefaultKey(), true);
         while (ds == 1) {
             try {
-                Thread.sleep(Math.round(MinecraftClient.getInstance().getLastFrameDuration()*10));
+                Thread.sleep(SidestickMod.fpsNum);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }

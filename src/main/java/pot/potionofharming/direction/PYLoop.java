@@ -2,14 +2,17 @@ package pot.potionofharming.direction;
 
 import net.minecraft.client.MinecraftClient;
 import org.lwjgl.glfw.GLFW;
+import pot.potionofharming.SidestickMod;
 
 import java.nio.FloatBuffer;
 
 import static pot.potionofharming.SidestickMod.*;
 
 public class PYLoop {
+    private static int currentLoopID;
 
     public static void initPaYLoop() {
+        currentLoopID = loopID;
         Thread pitchYawLoop = new Thread(() -> {
             paYLoop();
         });
@@ -18,6 +21,7 @@ public class PYLoop {
     }
     public static void paYLoop() {
         while (true) {
+            if (currentLoopID < loopID) break;
             if (player == null) player = MinecraftClient.getInstance().player;
             if (MinecraftClient.getInstance().isPaused() || player == null) {
                 try {
@@ -51,7 +55,7 @@ public class PYLoop {
             }
 
             try {
-                Thread.sleep(Math.round(MinecraftClient.getInstance().getLastFrameDuration()*100));
+                Thread.sleep(17);
                 // LOGGER.info("LASTFRAMETIME: "+MinecraftClient.getInstance().getLastFrameDuration()*100);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
@@ -60,7 +64,7 @@ public class PYLoop {
     }
 
     public static void changePaY(float pitch, float yaw) {
-        float sensitivity = 0.6f/Math.round(MinecraftClient.getInstance().getLastFrameDuration()*5);
+        float sensitivity = 0.6f/Math.round(SidestickMod.fpsNum);
         // LOGGER.info("MOUSESENSITIVITY: "+MinecraftClient.getInstance().options.getMouseSensitivity().getValue().toString());
         if (player.getPitch()+(pitch*sensitivity) > 90) player.setPitch(90);
         else player.setPitch(player.getPitch() + (pitch*sensitivity));
