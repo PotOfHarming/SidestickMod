@@ -1,10 +1,15 @@
 package pot.potionofharming.direction;
 
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
+import net.minecraft.network.packet.s2c.play.PlayerPositionLookS2CPacket;
+import net.minecraft.network.packet.s2c.play.PositionFlag;
 import org.lwjgl.glfw.GLFW;
 import pot.potionofharming.SidestickMod;
 
 import java.nio.FloatBuffer;
+import java.util.HashSet;
+import java.util.Set;
 
 import static pot.potionofharming.SidestickMod.*;
 
@@ -64,7 +69,8 @@ public class PYLoop {
     }
 
     public static void changePaY(float pitch, float yaw) {
-        float sensitivity = 0.6f/Math.round(SidestickMod.fpsNum);
+        float sens = 3;
+        float sensitivity = sens*0.6f/Math.round(SidestickMod.fpsNum);
         // LOGGER.info("MOUSESENSITIVITY: "+MinecraftClient.getInstance().options.getMouseSensitivity().getValue().toString());
         if (player.getPitch()+(pitch*sensitivity) > 90) player.setPitch(90);
         else player.setPitch(player.getPitch() + (pitch*sensitivity));
@@ -72,5 +78,13 @@ public class PYLoop {
         else player.setPitch(player.getPitch() + (pitch*sensitivity));
 
         player.setYaw(player.getYaw() + (yaw*sensitivity));
+        MinecraftClient client = MinecraftClient.getInstance();
+        if (client.getNetworkHandler()!=null) {
+            Set<PositionFlag> flags = new HashSet<>();
+            flags.add(PositionFlag.X);
+            flags.add(PositionFlag.Y);
+            flags.add(PositionFlag.Z);
+            client.getNetworkHandler().sendPacket(new PlayerMoveC2SPacket.LookAndOnGround(player.getYaw(), player.getPitch(), player.isOnGround()));
+        }
     }
 }

@@ -28,26 +28,22 @@ public class SelectSidestickScreen extends Screen {
                 ButtonWidget.builder(Text.literal("Back"), button -> {
                             this.client.setScreen(parent);
                         })
-                        .dimensions(5, 5, 100, 20)
+                        .dimensions(this.width / 2 - 155, this.height - 25, 150, 20)
                         .build()
         );
-        AtomicInteger w = new AtomicInteger(100);
-        String txt = "Current sidestick: "+GLFW.glfwGetJoystickName(joystickID);
         this.addDrawableChild(
                 ButtonWidget.builder(Text.literal("Current sidestick: "+GLFW.glfwGetJoystickName(joystickID)), button -> {
                             int id = joystickID;
-                            int limit = GLFW.GLFW_JOYSTICK_16;
+                            int limit = GLFW.GLFW_JOYSTICK_LAST;
                             int newId = id+1;
-                            if (newId>limit) newId=GLFW.GLFW_JOYSTICK_1;
-                            String name = GLFW.glfwGetJoystickName(newId);
+                            if (newId>limit||newId<0) newId=GLFW.GLFW_JOYSTICK_1;
+                            System.out.println(newId);
+                            String name = GLFW.glfwGetJoystickName(id);
                             button.setMessage(Text.literal("Current sidestick: "+name));
                             joystickID = newId;
-                            w.set(textRenderer.getWidth(button.getMessage()));
-                            button.setWidth(w.get()+10);
-                            button.setX(this.width / 2 - textRenderer.getWidth(button.getMessage())/2-5);
                             reloadLoops();
                         })
-                        .dimensions(this.width / 2 - textRenderer.getWidth(txt)/2-5, this.height / 2 - 10, textRenderer.getWidth(txt)+10, 20)
+                        .dimensions(this.width / 2 + 5, this.height - 25, 150, 20)
                         .build()
         );
     }
