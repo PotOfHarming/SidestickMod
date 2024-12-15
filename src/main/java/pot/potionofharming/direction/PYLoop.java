@@ -80,10 +80,6 @@ public class PYLoop {
         player.setYaw(player.getYaw() + (yaw*sensitivity));
         MinecraftClient client = MinecraftClient.getInstance();
         if (client.getNetworkHandler()!=null) {
-            Set<PositionFlag> flags = new HashSet<>();
-            flags.add(PositionFlag.X);
-            flags.add(PositionFlag.Y);
-            flags.add(PositionFlag.Z);
             client.getNetworkHandler().sendPacket(new PlayerMoveC2SPacket.LookAndOnGround(player.getYaw(), player.getPitch(), player.isOnGround()));
         }
     }

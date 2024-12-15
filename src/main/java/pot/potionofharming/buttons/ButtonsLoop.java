@@ -62,7 +62,7 @@ public class ButtonsLoop {
                 if (!MinecraftClient.getInstance().isPaused()) {
                     clickButton(buttons[0], buttons[1]);
                     changePerspective(buttons[2]);
-                    movement(buttons[17], buttons[18], buttons[19], buttons[20]);
+                    movement((float)(Byte.toUnsignedInt(buttons[17])-Byte.toUnsignedInt(buttons[19])), (float)(Byte.toUnsignedInt(buttons[18])-Byte.toUnsignedInt(buttons[20])));
                 }
             }
 
