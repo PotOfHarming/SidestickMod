@@ -25,7 +25,7 @@ public class SelectStick extends Screen {
                 ButtonWidget.builder(Text.literal("Sidestick options"), button -> {
                             this.client.setScreen(new SelectSidestickScreen(this.client.currentScreen));
                         })
-                        .dimensions(5, 5, 100, 20)
+                        .dimensions(5+100/8, 5+20/8, 100, 20)
                         .build()
         );
     }

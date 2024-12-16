@@ -9,27 +9,30 @@ import org.slf4j.LoggerFactory;
 import org.lwjgl.glfw.GLFW;
 import pot.potionofharming.buttons.ButtonsLoop;
 import pot.potionofharming.direction.PYLoop;
+import pot.potionofharming.screens.config.Configuration;
 
 public class SidestickMod implements ModInitializer {
 	public static final String MOD_ID = "sidestickmod";
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
-	public static int joystickID;
 	public static boolean joystickFound = false;
 	public static int loopID = 0;
 	public static int fpsNum = 16;
 	@Override
 	public void onInitialize() {
+		Configuration.loadConfig();
 		if (!GLFW.glfwInit()) {
 			throw new IllegalStateException("Unable to initialize GLFW");
 		}
 
 		// Get Joystick connected
-		for (int i = GLFW.GLFW_JOYSTICK_1; i <= GLFW.GLFW_JOYSTICK_LAST; i++) {
-			if (GLFW.glfwJoystickPresent(i)) {
-				LOGGER.info("Joystick found: " + GLFW.glfwGetJoystickName(i));
-				joystickID = i;
-				joystickFound = true;
+		if (Configuration.getStickId()==-1||GLFW.glfwGetJoystickName(Configuration.getStickId())==null) {
+			for (int i = GLFW.GLFW_JOYSTICK_1; i <= GLFW.GLFW_JOYSTICK_LAST; i++) {
+				if (GLFW.glfwJoystickPresent(i)) {
+					LOGGER.info("Joystick found: " + GLFW.glfwGetJoystickName(i));
+					Configuration.setSensitivity(i);
+					joystickFound = true;
+				}
 			}
 		}
 
@@ -45,8 +48,8 @@ public class SidestickMod implements ModInitializer {
 		if (!joystickFound) {
 			LOGGER.warn("NO JOYSTICK FOUND /!\\");
 		} else {
-			LOGGER.info("AXIS: "+GLFW.glfwGetJoystickAxes(SidestickMod.joystickID).toString());
-			if (!GLFW.glfwJoystickPresent(joystickID)) {
+			LOGGER.info("AXIS: "+GLFW.glfwGetJoystickAxes(Configuration.getStickId()).toString());
+			if (!GLFW.glfwJoystickPresent(Configuration.getStickId())) {
 				LOGGER.warn("JOYSTICK IS NOT PRESENT!");
 				return;
 			}

@@ -2,14 +2,11 @@ package pot.potionofharming.direction;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.network.packet.c2s.play.PlayerMoveC2SPacket;
-import net.minecraft.network.packet.s2c.play.PlayerPositionLookS2CPacket;
-import net.minecraft.network.packet.s2c.play.PositionFlag;
 import org.lwjgl.glfw.GLFW;
 import pot.potionofharming.SidestickMod;
+import pot.potionofharming.screens.config.Configuration;
 
 import java.nio.FloatBuffer;
-import java.util.HashSet;
-import java.util.Set;
 
 import static pot.potionofharming.SidestickMod.*;
 
@@ -36,7 +33,7 @@ public class PYLoop {
                 }
                 continue;
             }
-            FloatBuffer axesBuffer = GLFW.glfwGetJoystickAxes(joystickID);
+            FloatBuffer axesBuffer = GLFW.glfwGetJoystickAxes(Configuration.getStickId());
             if (axesBuffer != null) {
                 StringBuilder axesString = new StringBuilder("Joystick Axes: [");
                 float[] axes = new float[axesBuffer.limit()];
@@ -70,7 +67,7 @@ public class PYLoop {
 
     public static void changePaY(float pitch, float yaw) {
         float sens = 3;
-        float sensitivity = sens*0.6f/Math.round(SidestickMod.fpsNum);
+        float sensitivity = sens*((0.6f/Math.round(SidestickMod.fpsNum)))/500*(int)Configuration.getSensitivity();
         // LOGGER.info("MOUSESENSITIVITY: "+MinecraftClient.getInstance().options.getMouseSensitivity().getValue().toString());
         if (player.getPitch()+(pitch*sensitivity) > 90) player.setPitch(90);
         else player.setPitch(player.getPitch() + (pitch*sensitivity));

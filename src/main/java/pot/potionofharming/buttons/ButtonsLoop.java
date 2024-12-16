@@ -3,6 +3,7 @@ package pot.potionofharming.buttons;
 import net.minecraft.client.MinecraftClient;
 import org.lwjgl.glfw.GLFW;
 import pot.potionofharming.SidestickMod;
+import pot.potionofharming.screens.config.Configuration;
 
 import java.awt.*;
 import java.nio.ByteBuffer;
@@ -43,7 +44,7 @@ public class ButtonsLoop {
                 }
                 continue;
             }
-            ByteBuffer buttonsBuffer = GLFW.glfwGetJoystickButtons(joystickID);
+            ByteBuffer buttonsBuffer = GLFW.glfwGetJoystickButtons(Configuration.getStickId());
             if (buttonsBuffer != null) {
                 StringBuilder buttonsString = new StringBuilder("Joystick Buttons: [");
                 byte[] buttons = new byte[buttonsBuffer.limit()];
