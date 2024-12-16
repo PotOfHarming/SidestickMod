@@ -67,7 +67,7 @@ public class PYLoop {
 
     public static void changePaY(float pitch, float yaw) {
         float sens = 3;
-        float sensitivity = sens*((0.6f/Math.round(SidestickMod.fpsNum)))/500*(int)Configuration.getSensitivity();
+        float sensitivity = sens*((0.6f/Math.round(SidestickMod.fpsNum)))/100*(int)Configuration.getSensitivity();
         // LOGGER.info("MOUSESENSITIVITY: "+MinecraftClient.getInstance().options.getMouseSensitivity().getValue().toString());
         if (player.getPitch()+(pitch*sensitivity) > 90) player.setPitch(90);
         else player.setPitch(player.getPitch() + (pitch*sensitivity));
